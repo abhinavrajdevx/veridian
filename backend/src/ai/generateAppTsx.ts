@@ -1,4 +1,4 @@
-import Groq from "groq-sdk";
+import Anthropic from "@anthropic-ai/sdk";
 
 export const generateAppTsx = async (user_prompt: string) => {
   const SYSTEM_PROMPT = `
@@ -164,25 +164,24 @@ Remember to focus solely on creating the React component and stylesheet based on
 .
 `;
 
-  const groq = new Groq({
-    apiKey: "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",
+  const anthropic = new Anthropic({
+    apiKey:
+      "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",
   });
 
-  const llm_res = await groq.chat.completions.create({
+  const msg = await anthropic.messages.create({
+    model: "claude-3-5-sonnet-20241022",
+    max_tokens: 8192,
+    temperature: 0,
     messages: [
       {
         role: "user",
         content: SYSTEM_PROMPT,
       },
     ],
-    model: "qwen-2.5-coder-32b",
-    // model :"deepseek-r1-distill-llama-70b",
-    max_completion_tokens: 131072,
-    temperature: 0,
-    stream: false,
-    // response_format: { type: "json_object" },
-    // reasoning_format: "parsed",
   });
-  const json_res = llm_res.choices[0].message.content as string;
-  return json_res;
+  //@ts-ignore
+  let res = msg.content[0].text;
+  console.log(res);
+  return res;
 };
