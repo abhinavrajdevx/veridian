@@ -13,7 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateAppTsx = void 0;
-const groq_sdk_1 = __importDefault(require("groq-sdk"));
+const sdk_1 = __importDefault(require("@anthropic-ai/sdk"));
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
+const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY;
 const generateAppTsx = (user_prompt) => __awaiter(void 0, void 0, void 0, function* () {
     const SYSTEM_PROMPT = `
 You are tasked with creating a frontend React component, a stylesheet, and a backend Motoko function based on a given prompt. Follow these instructions carefully:
@@ -177,25 +180,23 @@ actor {
 Remember to focus solely on creating the React component and stylesheet based on the prompt. Do not provide any additional information or explanations outside of the specified XML tags.
 .
 `;
-    const groq = new groq_sdk_1.default({
-        apiKey: "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",
+    const anthropic = new sdk_1.default({
+        apiKey: CLAUDE_API_KEY,
     });
-    const llm_res = yield groq.chat.completions.create({
+    const msg = yield anthropic.messages.create({
+        model: "claude-3-5-sonnet-20241022",
+        max_tokens: 8192,
+        temperature: 0,
         messages: [
             {
                 role: "user",
                 content: SYSTEM_PROMPT,
             },
         ],
-        model: "qwen-2.5-coder-32b",
-        // model :"deepseek-r1-distill-llama-70b",
-        max_completion_tokens: 131072,
-        temperature: 0,
-        stream: false,
-        // response_format: { type: "json_object" },
-        // reasoning_format: "parsed",
     });
-    const json_res = llm_res.choices[0].message.content;
-    return json_res;
+    //@ts-ignore
+    let res = msg.content[0].text;
+    console.log(res);
+    return res;
 });
 exports.generateAppTsx = generateAppTsx;

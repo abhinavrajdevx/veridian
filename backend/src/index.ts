@@ -10,11 +10,13 @@ import {
   styleSheetparser,
 } from "./ai/responseParser";
 import { createfreshDfxproject } from "./utils/createfreshDfxproject";
+import { config } from "dotenv";
 
 // Load environment variables
 dotenv.config();
+config();
 
-const PORT = 3005;
+const PORT = process.env.PORT;
 
 const app = express();
 app.use(cors());

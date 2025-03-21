@@ -19,16 +19,18 @@ const file_systems_1 = require("./utils/file_systems");
 const generateAppTsx_1 = require("./ai/generateAppTsx");
 const dfx_commands_1 = require("./utils/dfx_commands");
 const responseParser_1 = require("./ai/responseParser");
+const dotenv_2 = require("dotenv");
 // Load environment variables
 dotenv_1.default.config();
-const PORT = 3005;
+(0, dotenv_2.config)();
+const PORT = process.env.PORT;
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-app.post("/generate", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/veridian/api/generate", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user_prompt } = req.body;
     console.log("received");
-    // await createfreshDfxproject();
+    // await createfreshDfxproject();`
     const ai_res = yield (0, generateAppTsx_1.generateAppTsx)(user_prompt);
     const react_code = (0, responseParser_1.reactCodeParser)(ai_res);
     const style_sheet = (0, responseParser_1.styleSheetparser)(ai_res);
