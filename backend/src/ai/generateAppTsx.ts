@@ -1,4 +1,9 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { config } from "dotenv";
+
+config();
+
+const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY;
 
 export const generateAppTsx = async (user_prompt: string) => {
   const SYSTEM_PROMPT = `
@@ -165,8 +170,7 @@ Remember to focus solely on creating the React component and stylesheet based on
 `;
 
   const anthropic = new Anthropic({
-    apiKey:
-      "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",
+    apiKey: CLAUDE_API_KEY,
   });
 
   const msg = await anthropic.messages.create({

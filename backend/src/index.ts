@@ -20,10 +20,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post("/generate", async (req: any, res: any) => {
+app.post("/veridian/api/generate", async (req: any, res: any) => {
   const { user_prompt } = req.body;
   console.log("received");
-  // await createfreshDfxproject();
+  // await createfreshDfxproject();`
   const ai_res = await generateAppTsx(user_prompt);
   const react_code = reactCodeParser(ai_res);
   const style_sheet = styleSheetparser(ai_res);
