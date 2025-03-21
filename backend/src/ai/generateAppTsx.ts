@@ -4,7 +4,7 @@ import { config } from "dotenv";
 config();
 
 const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY;
-
+console.log("CLAUDE_API_KEY", CLAUDE_API_KEY);
 export const generateAppTsx = async (user_prompt: string) => {
   const SYSTEM_PROMPT = `
 You are tasked with creating a frontend React component, a stylesheet, and a backend Motoko function based on a given prompt. Follow these instructions carefully:

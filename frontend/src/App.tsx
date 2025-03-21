@@ -13,13 +13,16 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3005/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user_prompt: prompt }),
-      });
+      const response = await fetch(
+        "https://server.abhinavraj.tech/veridian/api/generate",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_prompt: prompt }),
+        }
+      );
 
       const data = await response.json();
       console.log(data.output);
